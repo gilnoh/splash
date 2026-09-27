@@ -1921,7 +1921,7 @@ def parse_args(argv=None):
         choices=("bounded", "full"),
         default="bounded",
         help="bounded (default) keeps each prefill GPU command within a few "
-        "seconds so macOS does not abort long-context prefill; full sends "
+        "seconds on M1/M2 so macOS does not abort long-context prefill; full sends "
         "whole 2048-token chunks as before",
     )
     parser.add_argument(

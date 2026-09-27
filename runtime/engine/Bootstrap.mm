@@ -303,6 +303,11 @@ std::unique_ptr<RuntimeBootstrap> RuntimeBootstrap::start(
   config.nativeLoop.engine.maxImagePatches =
       config.resources.model.hasVision() ? config.resources.maximumImagePatches
                                          : 0;
+  // Only Apple7/8 (M1/M2) prefill slowly enough for macOS to abort a
+  // full-budget command; Apple9 and newer keep upstream's isolated budget.
+  config.nativeLoop.engine.boundPrefillCommands =
+      config.nativeLoop.engine.boundPrefillCommands &&
+      resources->backend().capabilities().appleGpuFamily < 9;
 
   std::unique_ptr<model::RuntimeModel> modelRuntime;
   try {
